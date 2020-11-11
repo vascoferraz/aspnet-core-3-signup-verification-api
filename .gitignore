@@ -43,3 +43,8 @@ obj
 
 # Generated SQLite db
 WebApiDatabase.db
+WebApiDatabase.db-shm
+WebApiDatabase.db-wal
+
+# Local settings
+.vs
