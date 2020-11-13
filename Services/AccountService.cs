@@ -200,6 +200,9 @@ namespace WebApi.Services
 
             _context.Accounts.Update(account);
             _context.SaveChanges();
+
+            // send email
+            sendPasswordResetSuccessfulEmail(account);
         }
 
         public IEnumerable<AccountResponse> GetAll()
@@ -382,6 +385,21 @@ namespace WebApi.Services
                 to: account.Email,
                 subject: "Sign-up Verification API - Reset Password",
                 html: $@"<h4>Reset Password Email</h4>
+                         {message}"
+            );
+        }
+
+        private void sendPasswordResetSuccessfulEmail(Account account)
+        {
+            string message;
+            {
+                message = $@"<p>Your password has been reset successfully.</p>";
+            }
+
+            _emailService.Send(
+                to: account.Email,
+                subject: "Sign-up Verification API - Password reset successfully",
+                html: $@"<h4>Dear {account.FirstName} {account.LastName},</h4>
                          {message}"
             );
         }
