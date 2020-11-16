@@ -20,6 +20,7 @@ namespace WebApi.Services
         AuthenticateResponse Authenticate(AuthenticateRequest model, string ipAddress);
         AuthenticateResponse RefreshToken(string token, string ipAddress);
         void RevokeToken(string token, string ipAddress);
+        void AccountExists(string email);
         void Register(RegisterRequest model, string origin);
         void VerifyEmail(string token);
         void ForgotPassword(ForgotPasswordRequest model, string origin);
@@ -110,6 +111,13 @@ namespace WebApi.Services
             refreshToken.RevokedByIp = ipAddress;
             _context.Update(account);
             _context.SaveChanges();
+        }
+
+        public void AccountExists(string email)
+        {
+            if (_context.Accounts.Any(x => x.Email == email))
+                throw new AppException($"The email '{email}' is already taken");
+            else return;
         }
 
         public void Register(RegisterRequest model, string origin)

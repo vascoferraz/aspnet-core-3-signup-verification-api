@@ -59,6 +59,13 @@ namespace WebApi.Controllers
             return Ok(new { message = "Token revoked" });
         }
 
+        [HttpPost("account-exists")] // Endpoint for the frontend to check in real-time if the email is already taken
+        public IActionResult AccountExists(AccountExists model)
+        {
+            _accountService.AccountExists(model.Email);
+            return Ok(new { message = $"The email '{model.Email}' is available" });
+        }
+
         [HttpPost("register")]
         public IActionResult Register(RegisterRequest model)
         {
