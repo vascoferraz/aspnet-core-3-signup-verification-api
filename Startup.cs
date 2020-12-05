@@ -62,8 +62,6 @@ namespace WebApi
                     });
             });
 
-
-
             // configure strongly typed settings object
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
